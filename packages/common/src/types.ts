@@ -17,6 +17,7 @@ export type ChangeSchemas = (objs: { key: string; value: any; schemaId: string }
  * @property {PDFPage} page PDFPage object from pdf-lib.
  * @property {GeneratorOptions} options Options object passed from the generator.
  * @property {Map<string, any>} _cache Cache shared only during the execution of the generate function (useful for caching images, etc. if needed).
+ * @property {string} cacheKey The unique cache key for this combination of value and schema
  */
 export interface PDFRenderProps<T extends Schema> {
   value: string;
@@ -25,8 +26,8 @@ export interface PDFRenderProps<T extends Schema> {
   pdfDoc: PDFDocument;
   page: PDFPage;
   options: GeneratorOptions;
-
   _cache: Map<string, any>;
+  cacheKey: string;
 }
 
 /**

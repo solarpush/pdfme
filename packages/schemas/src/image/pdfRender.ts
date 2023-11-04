@@ -1,16 +1,15 @@
 import type { PDFRenderProps } from '@pdfme/common';
 import type { ImageSchema } from './types';
-import { getCacheKey, convertForPdfLayoutProps } from '../renderUtils';
+import { convertForPdfLayoutProps } from '../renderUtils';
 
 export const pdfRender = async (arg: PDFRenderProps<ImageSchema>) => {
-  const { value, schema, pdfDoc, page, _cache } = arg;
+  const { value, schema, pdfDoc, page, _cache, cacheKey } = arg;
 
-  const inputImageCacheKey = getCacheKey(schema, value);
-  let image = _cache.get(inputImageCacheKey);
+  let image = _cache.get(cacheKey);
   if (!image) {
     const isPng = value.startsWith('data:image/png;');
     image = await (isPng ? pdfDoc.embedPng(value) : pdfDoc.embedJpg(value));
-    _cache.set(inputImageCacheKey, image);
+    _cache.set(cacheKey, image);
   }
 
   const pageHeight = page.getHeight();

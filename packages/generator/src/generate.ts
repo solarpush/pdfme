@@ -62,7 +62,9 @@ const generate = async (props: GenerateProps) => {
           throw new Error(`[@pdfme/generator] Renderer for type ${schema.type} not found.
 Check this document: https://pdfme.com/docs/custom-schemas`);
         }
-        await render({ value, schema, pdfLib, pdfDoc, page, options, _cache });
+        const cacheKey = `${key}-${value}`;
+
+        await render({ value, schema, pdfLib, pdfDoc, page, options, _cache, cacheKey });
       }
     }
   }
